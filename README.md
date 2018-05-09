@@ -1,11 +1,11 @@
 # log-filter
 A Log files filter web application
 
-Backend: Golang
+    Backend: Go
 
-Frontend: Vue.js
+    Frontend: Vue.js
 
 # Run
-$ cd ./backend
+    $ cd ./backend
 
-$ ./backend &
+    $ ./backend &
