@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -93,6 +94,8 @@ func (this *Filter) GetFileContByNode(i uint8) ([]byte, error) {
 	fileName := f.Name()
 	fPath := path + "/" + fileName
 
+	fmt.Printf("fPath :%s\n", fPath)
+
 	file, err := os.Open(fPath)
 	if err != nil {
 		return []byte{}, err
@@ -106,7 +109,7 @@ func (this *Filter) GetFileContByNode(i uint8) ([]byte, error) {
 	buf := make([]byte, f.Size()-(int64)(cacheFileSize))
 	_, err = file.ReadAt(buf, (int64)(cacheFileSize))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("file readat failed", file.Name(), err)
 	}
 	_, err = this.LogCache.AddLogCache(fileName, buf)
 	if err != nil {
