@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -91,6 +92,10 @@ func (this *Filter) GetFileContByNode(i uint8) ([]byte, error) {
 	if err != nil {
 		return []byte{}, err
 	}
+
+	if f == nil {
+		return []byte{}, errors.New("No log file found")
+	}
 	fileName := f.Name()
 	fPath := path + "/" + fileName
 
@@ -145,11 +150,14 @@ func getNodeLatestFile(i uint8) (os.FileInfo, error) {
 		return nil, err
 	}
 	var f os.FileInfo
-	for i := len(files) - 1; i > 0; i-- {
+	for i := len(files) - 1; i >= 0; i-- {
 		f = files[i]
 		if !f.IsDir() && f.Size() > 0 {
 			break
 		}
+	}
+	if f != nil && f.IsDir() {
+		return nil, errors.New("There is no log for this node")
 	}
 	return f, nil
 }
