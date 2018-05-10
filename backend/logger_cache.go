@@ -91,6 +91,5 @@ func (this *LogCache) AddLogCache(fileName string, buf []byte) (bool, error) {
 	orgFileInfo.buf = append(orgFileInfo.buf, buf...)
 	orgFileInfo.lastUseTime = time.Now()
 	orgFileInfo.size += uint64(len(buf))
-	fmt.Printf("orgFileInfo:%v, this.files:%v\n, size:%d\n", orgFileInfo, this.files, this.files[fileName].size)
 	return true, nil
 }
